@@ -1,12 +1,24 @@
 import React, { Component } from 'react';
 import api from './api';
 
+/*{this.results.infos && this.results.infos.map((rio, indice) => ( 
+  <li key={indice}>
+    {rio}
+  </li>
+))}*/
+
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       rios: [],
-      value: " ",
+      value: "",
+    };
+
+    this.results = {
+      infos: [],
+      state: false,
+      nome: "",
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -25,16 +37,30 @@ class App extends Component {
     
   };
 
-  handleSubmit = async (evento) => {
+  handleSubmit = async (evento) => {    
     evento.preventDefault();
-    if (this.value !== " ") {
-      const response = await api.get(this.state.value);
-      this.setState({ rios: response.data });
-    }
+    if (this.state.value !== "") {
+      this.results.infos = [];
+      this.results.state = false;
+
+      const arrayRios = this.state.rios.features;  
+      
+      arrayRios.forEach(rio => {
+       if(rio.attributes.NORIOCOMP === this.state.value){
+         this.results.state = true;
+         const stringResult = 'Frequencia: ' + rio.attributes.FREQUENCIA + ', Impacto: '+rio.attributes.IMPACTO+', Vulnerabilidade: ' + rio.attributes.VULNERABILIDADE;
+         this.results.infos.push(stringResult); 
+         this.results.nome = this.state.value;      
+       }
+      });
+      console.log(this.results.state);
+    }    
+    this.setState({});
   };
 
   render() {    
     return (
+      <div>
       <div>
         
          {console.log(this.state.rios)}
@@ -44,14 +70,15 @@ class App extends Component {
           <input type="text" value={this.state.value} onChange={this.handleChange} />
           <input type="submit" value="Enviar" />
           </label>
+          </form>   
+      </div>
+      <div>        
+            {this.results.state && <ul>
+            <li>{this.results.nome}</li> 
+            <li>{this.results.infos[0]}</li>
+            </ul> }
           
-          {this.state.rios.features && this.state.rios.features.map((rio, indice) => (
-              <li key={indice}>
-                {rio.attributes.NORIOCOMP}
-              </li>
-          ))}
-          
-        </form>        
+      </div>      
       </div>
     );
   }
