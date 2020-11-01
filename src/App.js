@@ -73,11 +73,16 @@ class App extends Component {
         
         if(rio.attributes.NORIOCOMP === this.state.value){
         
-        let info = 'Nome: ' + rio.attributes.NORIOCOMP +', Frequência: '+rio.attributes.FREQUENCIA+', Impacto: '+
-                    rio.attributes.IMPACTO + ', Vulnerabilidade: '+rio.attributes.VULNERABILIDADE ;
+        let info = 'Nome: ' + rio.attributes.NORIOCOMP
+        let info1 = 'Frequência: '+rio.attributes.FREQUENCIA
+        let info2 = 'Impacto: '+rio.attributes.IMPACTO 
+        let info3 = 'Vulnerabilidade: '+rio.attributes.VULNERABILIDADE ;
                    
         
-        this.results.infos.push(info);            
+        this.results.infos.push(info);
+        this.results.infos.push(info1);
+        this.results.infos.push(info2);
+        this.results.infos.push(info3);            
         }
       });    
     }
@@ -90,18 +95,18 @@ class App extends Component {
       <div>
         
          {console.log(this.state.rios)}
-        <form onSubmit={this.handleSubmit}>
-        Rios:
-          <label>
-          <input type="text" value={this.state.value} onChange={this.handleChange} />
-          <input type="submit" value="Enviar" />
-          </label>
-          </form>   
+        <form id="formulario" onSubmit={this.handleSubmit}>
+          <p>Digite um rio aqui: <input type="text" value={this.state.value} onChange={this.handleChange} /><input type="submit" value="Pesquisar" /></p>
+                  
+        </form>   
       </div>
       <div>        
-            {this.results.state && <ul>
-            <li>{this.results.nome}</li> 
+            {this.results.state && <ul id="listagem" >
+            
             <li>{this.results.infos[0]}</li>
+            <li>{this.results.infos[1]}</li>
+            <li>{this.results.infos[2]}</li>
+            <li>{this.results.infos[3]}</li>
             </ul> }
           
       </div>      
