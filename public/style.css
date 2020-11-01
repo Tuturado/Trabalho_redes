@@ -1,21 +1,57 @@
-#Mapa{
-    position: absolute; 
-    left: 864px; /* posiciona a 90px para a esquerda */ 
-	top: 0px; /* posiciona a 70px para baixo */
-}
-
-
-
 body{
     background-image: url(rio2.jpg);
     background-attachment: fixed;
     background-size: 100%;
     background-repeat: no-repeat;
-    background-color: black;
+    background-color: black;    
+    display: flex;   
+    flex-direction: column; 
+    padding-right: 10px;
+    padding-left: 10px;
+    max-width:fit-content;
+    overflow-x: hidden; 
+    overflow-y: visible;   
+    align-items: flex-start;
+}
+
+
+
+html, body {
+    position:fixed;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+}
+
+#divBody{
+    display: flex;
+    flex-direction: row;    
+    
+    width: 100%;
+}
+
+
+@media (max-width:900px){
+    #divBody{
+        flex-direction: column;
+        overflow-y: scroll;
+
+    }
+    
+}
+
+#divTexts{
+    margin-right: 20px;
+}
+
+#Mapa{
+    width: 350px;
+    height:400px;
 }
 
 #Entrada{
-    padding: 10px;
+    padding: 20px;
     width: 200px;
     color: #000;
     
@@ -30,27 +66,34 @@ body{
 }
 
 #listagem{
-    font-family:'Times New Roman', Times, serif;
+    font-family:'Segoe UI','Times New Roman', Times, serif;
     font-size: 20px;
-    color: white; 
+    color: black; 
 }
 
 #formulario {
-  font-family:'Times New Roman', Times, serif;
+  font-family:'Segoe UI','Times New Roman', Times, serif;
   font-size: 25px;
-  color: white;
+  color: black;
 }
 
 #Texto{
-    font-family:'Times New Roman', Times, serif;
-    font-size: 19px;
-    color: white;
+    font-family:"Segoe UI",'Times New Roman', Times, serif;
+    font-size: 20px;
+    color: black;
+    text-align: justify;
+    text-justify: auto;
 }
 
 .footer {
-	position:absolute;
-	bottom:0;
+    justify-self: flex-end ;	
+    margin-top: auto;
+    
     width:100%;
     font-family: 'Times New Roman', Times, serif;
-    color: white;
+    color: black;
+}
+
+#barraPesquisa{
+    margin-right: 10px;
 }

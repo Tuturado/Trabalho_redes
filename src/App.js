@@ -96,7 +96,7 @@ class App extends Component {
         
          {console.log(this.state.rios)}
         <form id="formulario" onSubmit={this.handleSubmit}>
-          <p>Digite um rio aqui: <input type="text" value={this.state.value} onChange={this.handleChange} /><input type="submit" value="Pesquisar" /></p>
+          <p>Digite um rio aqui: <input type="text" value={this.state.value} onChange={this.handleChange} id="barraPesquisa" /><input id="botaoPesquisa"type="submit" value="Pesquisar" /></p>
                   
         </form>   
       </div>
