@@ -42,7 +42,7 @@ class App extends Component {
     evento.preventDefault();
 
     let river = '';
-    let base_url = 'https://portal1.snirh.gov.br/ana/rest/services/dados_abertos/Trechos_de_Curso_de_Agua_Inundaveis/FeatureServer/query?layerDefs=%5B%7B%22layerId%22%3A+0%2C+%22where%22%3A+%22NORIOCOMP%3D%27';
+    let base_url = 'https://portal1.snirh.gov.br/ana/rest/services/dados_abertos/Trechos_de_Curso_de_Agua_Inundaveis/FeatureServer/query?layerDefs=%5B%7B%22layerId%22%3A+0%2C+%22where%22%3A+%22NORIOCOMP%3E%3D%27';
     let base_url2 = '%27%22%2C+%22outfields%22%3A+%22*%22+%7D%5D&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&time=&outSR=&havingClause=&gdbVersion=&historicMoment=&returnDistinctValues=false&returnGeometry=false&maxAllowableOffset=&returnIdsOnly=false&returnCountOnly=false&returnZ=false&returnM=false&geometryPrecision=&multipatchOption=xyFootprint&returnTrueCurves=false&resultOffset=&resultRecordCount=&sqlFormat=standard&f=pjson';
     let URL_Request = '';
     this.results.state = false;
@@ -50,22 +50,35 @@ class App extends Component {
     if (this.state.value !== "") {
       this.results.state = true;
       river = this.state.value;
-      river = river.replace(" " , "+");
-      console.log(river);
+      river = river.replaceAll(" " , "+");
+      river.replace(/á|é|í|ó|ú|õ|ã|ü|ï|ñ/gi, function (x) {
+        return "999";
+      })
+
+       
+      if(river.search("999")){
+        const posicao = river.search("999");
+        river = river.slice(0, posicao);
+      }
+
+
+      
       URL_Request = base_url + river + base_url2;
       console.log(URL_Request);
       const response = await api.get(URL_Request);
-      console.log(response);
+      
 
       response.data.layers[0].features.forEach(rio=>{
 
         
+        if(rio.attributes.NORIOCOMP === this.state.value){
+        
         let info = 'Nome: ' + rio.attributes.NORIOCOMP +', Frequência: '+rio.attributes.FREQUENCIA+', Impacto: '+
                     rio.attributes.IMPACTO + ', Vulnerabilidade: '+rio.attributes.VULNERABILIDADE ;
                    
-        console.log(info);
+        
         this.results.infos.push(info);            
-
+        }
       });    
     }
     this.setState({});
